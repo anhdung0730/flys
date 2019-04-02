@@ -3,8 +3,7 @@
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
-{ 
-	//m muon t them cai gi
+{
     /**
      * Run the database seeds.
      *
@@ -12,18 +11,16 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-    	// admin
-        DB::table('users')->insert([
-            'name' => 'Dung',
-            'email' => 'dung@gmail.com',
-            'password' => bcrypt('123123'), // pass
+      DB::table('users')->insert([
+            'name' => 'Duy',
+            'email' => 'duy@gmail.com',
+            'password' => bcrypt('123123'),
             'phone' => '1231231231',
             'isAdmin' => 1
         ]);
-        //user
       DB::table('users')->insert([
-            'name' => 'Dung1',
-            'email' => 'dung1@gmail.com',
+            'name' => 'Huy Duy',
+            'email' => 'huyduy@gmail.com',
             'password' => bcrypt('123123'),
             'phone' => '1231231231',
         ]);

@@ -41,7 +41,7 @@
                     <td>{{ $flightBook->duration }}</td>
                     <td>{{ $flightBook->flight_cost }}</td>
                     <td><a type="button" href="{{ route('user.detailsFlightBook', ['flight_book_id' => $flightBook->id]) }}" class="btn btn-info form-group">Details</a></td>
-                    <td><a type="button" class="btn btn-danger">Delete</a></td>
+                    <td><a type="button" href="{{ route('user.deleteFlightBook', ['flight_book_id' => $flightBook->id]) }}" class="btn btn-danger">Delete</a></td>
                   </tr>
                     @endforeach
                   </tbody>

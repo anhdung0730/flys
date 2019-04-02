@@ -27,7 +27,7 @@
               {{ var_dump(session('input')) }}
             </div>
           @endif
-          <form action="{{ route('storeFlight') }}" name="createFlight" method="POST">
+          <form action="{{ route('admin.storeFlight') }}" name="createFlight" method="POST">
             {{ csrf_field() }}
             <div class="row form-create-flight">
               <div class="col-md-3">

@@ -210,7 +210,7 @@ class FlightController extends Controller
           }
 
           // Paginate
-          $flights = $flights->paginate(5);
+          $flights = $flights->paginate(3);
           $flights->appends(request()->input())->links();
 
           $airports = DB::table('airports')->get();

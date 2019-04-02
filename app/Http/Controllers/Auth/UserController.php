@@ -107,4 +107,18 @@ class UserController extends Controller
         'passengers' => $passengers
       ]);
     }
+
+    public function deleteFlightBook($id)
+    {
+
+      $flightBook = DB::table('flight_books')->where('id', $id);
+      $flightBook->delete();
+
+      $payment = DB::table('payments')->where('payment_flight_book_id', $id);
+      $payment->delete();
+
+      $passengers = DB::table('passengers')->where('passenger_flight_book_id', $id);
+      $passengers->delete();
+      return back();
+    }
 }

@@ -49,7 +49,7 @@
                         @else
                             @if (auth()->check())
                               @if (auth()->user()->isAdmin)
-                                <li><a href="{{ route('adminIndex') }}">Admin Home</a></li>
+                                <li><a href="{{ route('admin.index') }}">Admin Home</a></li>
                               @else
                                 <li><a href="{{ route('home') }}">User Home</a></li>
                               @endif

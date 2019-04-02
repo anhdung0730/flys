@@ -30,18 +30,6 @@ Route::get('/flight-list', [
   'as' => 'searchFlight'
 ]);
 
-// Create flight
-Route::get('/admin/flight/create', [
-  'uses' => 'FlightController@create',
-  'as' => 'createFlight'
-])->middleware('admin');
-
-Route::post('/admin/flight/store', [
-  'uses' => 'FlightController@store',
-  'as' => 'storeFlight'
-])->middleware('admin');
-
-
 /*
   Booking page
 */
@@ -60,9 +48,24 @@ Route::post('/flight-book/{flight_id}', [
 */
 Route::get('admin/index', [
   'uses' => 'AdminController@index',
-  'as' => 'adminIndex'
+  'as' => 'admin.index'
 ])->middleware('admin');
 
+Route::get('admin/manageFlights', [
+  'uses' => 'AdminController@manageFlights',
+  'as' => 'admin.manageFlights'
+])->middleware('admin');
+
+// Create flight
+Route::get('/admin/flight/create', [
+  'uses' => 'FlightController@create',
+  'as' => 'admin.createFlight'
+])->middleware('admin');
+
+Route::post('/admin/flight/store', [
+  'uses' => 'FlightController@store',
+  'as' => 'admin.storeFlight'
+])->middleware('admin');
 /*
   User routes
 */
@@ -71,4 +74,5 @@ Route::get('user/update', 'Auth\UserController@index')->name('user.update');
 Route::post('user/update', 'Auth\UserController@update')->name('user.update');
 Route::get('user/manageFlightBooks', 'Auth\UserController@manageFlightBooks')->name('user.manageFlightBooks');
 Route::get('user/detailsFlightBook/{flight_book_id}', 'Auth\UserController@detailsFlightBook')->name('user.detailsFlightBook');
+Route::get('user/deleteFlightBook/{flight_book_id}', 'Auth\UserController@deleteFlightBook')->name('user.deleteFlightBook');
 Route::get('/home', 'HomeController@index')->name('home');

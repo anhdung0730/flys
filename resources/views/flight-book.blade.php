@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-  {{ var_dump($flight) }}
   <main>
           <div class="container">
               <h2>Booking</h2>

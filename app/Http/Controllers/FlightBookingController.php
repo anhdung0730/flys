@@ -54,4 +54,5 @@ class FlightBookingController extends Controller
       session()->flash('message', 'Flight booked successfully.');
       return redirect('/home');
     }
+
 }
