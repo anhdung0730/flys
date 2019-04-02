@@ -14,7 +14,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4><strong><a href="{{ route('flightBooking', ['flight_id' => $flight->id]) }}">{{ $flight->flight_code }} {{ $flight->airplane_name }}</a></strong></h4>
+                                    <h4><strong><a href="flight-detail.html">{{ $flight->flight_code }} {{ $flight->airplane_name }}</a></strong></h4>
                                     <div class="row">
                                         <div class="col-sm-3">
                                             <label class="control-label">From:</label>
@@ -34,8 +34,8 @@
                                         <div class="col-sm-3 text-right">
                                             <h3 class="price text-danger"><strong>{{ str_replace(',', '.', number_format($flight->flight_cost)) }}</strong></h3>
                                             <div>
-                                                <a href="" class="btn btn-link">See Detail</a>
-                                                <a href="{{ route('flightBooking', ['flight_id' => $flight->id]) }}" class="btn btn-primary">Choose</a>
+                                                <a href="flight-detail.html" class="btn btn-link">See Detail</a>
+                                                <a href="flight-book.html" class="btn btn-primary">Choose</a>
                                             </div>
                                         </div>
                                     </div>

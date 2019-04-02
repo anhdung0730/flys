@@ -12,7 +12,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -49,7 +48,7 @@
                         @else
                             @if (auth()->check())
                               @if (auth()->user()->isAdmin)
-                                <li><a href="{{ route('admin.index') }}">Admin Home</a></li>
+                                <li><a href="{{ route('adminIndex') }}">Admin Home</a></li>
                               @else
                                 <li><a href="{{ route('home') }}">User Home</a></li>
                               @endif

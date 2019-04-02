@@ -17,13 +17,9 @@
                             {{ session('error') }}
                         </div>
                     @endif
-                    @if (session('message'))
-                        <div class="alert alert-success">
-                            {{ session('message') }}
-                        </div>
-                    @endif
+
                   <a class="btn btn-primary" href="{{ route('user.update') }}">Edit information</a>
-                  <a class="btn btn-info" href="{{ route('user.manageFlightBooks') }}">Manage Flights booking</a>
+                  {{-- <a class="btn btn-info" href="{{ route('') }}">Manage Flights booking</a> --}}
 
                 </div>
             </div>

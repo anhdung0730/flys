@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Carbon\Carbon;
-use App\Flight;
 
 class FlightController extends Controller
 {
@@ -38,7 +36,7 @@ class FlightController extends Controller
         return view('admin.create-flight', [
           'airports' => $airports,
           'airplanes' => $airplanes,
-          'flightClasses' => $flightClasses,
+          'flightClasses' => $flightClasses
         ]);
     }
 
@@ -50,77 +48,7 @@ class FlightController extends Controller
      */
     public function store(Request $request)
     {
-
-
-        $validator = Validator::make($request->all(), [
-          'flight_airport_from' => 'required|different:flight_airport_to',
-          'flight_code' => 'required|unique:flights',
-          'distance' => 'required',
-          'departure-date' => 'required|after_or_equal:today',
-          'return-date' => 'after_or_equal:departure-date|nullable',
-          'departure-datetime' => 'required|after_or_equal:departure-date',
-          'arrival-datetime' => 'required|after_or_equal:departure-datetime',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()
-                        ->back()
-                        ->withErrors($validator->errors())
-                        ->withInput();
-        } else {
-
-          $input = $request->all();
-          $flight = new Flight;
-          $flight->flight_class_id = $input['flightClass'];
-          $flight->flight_type = $input['flight_type'];
-          $flight->flight_code = $input['flight_code'];
-          $flight->flight_airplane_id = $input['airplane'];
-          $flight->flight_airport_from_id = $input['flight_airport_from'];
-          $flight->flight_airport_to_id = $input['flight_airport_to'];
-
-          // Quy dinh gia may bay
-          switch ($input['distance']) {
-            case $input['distance'] >= 0 && $input['distance'] <= 100:
-              $flight->flight_cost = 500000;
-              break;
-            case $input['distance'] >= 101 && $input['distance'] <= 200:
-              $flight->flight_cost = 1000000;
-              break;
-            case $input['distance'] >= 201 && $input['distance'] <= 500:
-              $flight->flight_cost = 2000000;
-              break;
-            case $input['distance'] >= 501 && $input['distance'] <= 1000:
-              $flight->flight_cost = 3000000;
-              break;
-            case $input['distance'] >= 1001 && $input['distance'] <= 2000:
-              $flight->flight_cost = 6000000;
-              break;
-            case $input['distance'] >= 2001 && $input['distance'] <= 5000:
-              $flight->flight_cost = 20000000;
-              break;
-            case $input['distance'] >= 5001:
-                $flight->flight_cost = 30000000;
-                break;
-            default:
-              break;
-          }
-
-          $flight->flight_departure_date = $input['departure-date'];
-          $flight->flight_return_date = $input['return-date'];
-
-
-          $flight->flight_departure_time = $input['departure-datetime'];
-          $flight->flight_arrival_time = $input['arrival-datetime'];
-          $flight->duration = date('H:i', strtotime($input['arrival-datetime']) - strtotime($input['departure-datetime']));
-          $flight->save();
-          return redirect()->action('FlightController@create')->with([
-            'status' => [
-              'created' => "OK"
-            ],
-            'input' => $input,
-          ]);
-        }
-
+        //
     }
 
     /**
@@ -203,14 +131,17 @@ class FlightController extends Controller
           // Check if departure-date is selected
           if (isset($input['departure-date'])) {
             $flights = $flights->where('flight_departure_date', '=', $input['departure-date']);
+          } else {
+            $flights = $flights->where('flight_departure_date', '>=', now());
           }
           // Check if return-date is selected
           if (isset($input['departure-date'])) {
             $flights = $flights->where('flight_return_date', '=', $input['return-date']);
+
           }
 
           // Paginate
-          $flights = $flights->paginate(3);
+          $flights = $flights->paginate(2);
           $flights->appends(request()->input())->links();
 
           $airports = DB::table('airports')->get();

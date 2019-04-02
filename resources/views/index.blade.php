@@ -17,17 +17,17 @@
               <div class="row">
                 <div class="col-sm-4">
                   <h4 class="form-heading">1. Flight Destination</h4>
-                  <div class="form-group{{ $errors->has('from') ? ' has-error' : '' }}">
+                  <div class="form-group">
                     <label class="control-label">From: </label>
-                    <select class="form-control" name="from" id="from">
+                    <select class="form-control{{ $errors->has('from') ? ' has-error' : '' }}" name="from" id="from">
                       @foreach ($airports as $airport)
                         <option value="{{ $airport->id }}">{{ $airport->city_name }}</option>
                       @endforeach
                     </select>
                   </div>
-                  <div class="form-group{{ $errors->has('from') ? ' has-error' : '' }}">
+                  <div class="form-group">
                     <label class="control-label">To: </label>
-                    <select class="form-control" name="to" id="to">
+                    <select class="form-control{{ $errors->has('to') ? ' has-error' : '' }}" name="to" id="to">
                       @foreach ($airports as $airport)
                         <option value="{{ $airport->id }}">{{ $airport->city_name }}</option>
                       @endforeach

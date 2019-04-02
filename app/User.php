@@ -26,14 +26,4 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
-
-    public function flightBooks()
-    {
-      return $this->hasMany(FlightBook::class, 'customer_id');
-    }
-
-    public function passengers()
-    {
-      return $this->hasMany(Passenger::class, 'passenger_customer_id');
-    }
 }

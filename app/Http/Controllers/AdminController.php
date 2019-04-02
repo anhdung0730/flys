@@ -18,12 +18,4 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    public function manageFlights()
-    {
-      $flights = DB::table('flights')->paginate(5);
-      return view('admin.manageFlights', [
-        'flights' => $flights
-      ]);
-    }
-
 }

@@ -25,8 +25,8 @@ class CreateFlightsTable extends Migration
             $table->integer('flight_airport_to_id')->unsigned();
             $table->date('flight_departure_date')->nullable();
             $table->date('flight_return_date')->nullable();
-            $table->datetime('flight_departure_time');
-            $table->datetime('flight_arrival_time');
+            $table->datetime('flight_departure_time')->nullable();
+            $table->datetime('flight_arrival_time')->nullable();
             $table->time('duration')->nullable();
             $table->timestamps();
         });
