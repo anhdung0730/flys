@@ -22,5 +22,16 @@ class AirplaneTableSeeder extends Seeder
         DB::table('airplanes')->insert([
             'airplane_name' => 'Japan Airlines'
         ]);
+        DB::table('airplanes')->insert([
+            'airplane_name' => 'Bamboo Airways'
+        ]);
+
+        DB::table('airplanes')->insert([
+            'airplane_name' => 'China Airways'
+        ]);
+
+        DB::table('airplanes')->insert([
+            'airplane_name' => 'American Airlines'
+        ]);
     }
 }

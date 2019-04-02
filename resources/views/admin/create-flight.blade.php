@@ -6,15 +6,30 @@
       <h3>Create new Flight</h3>
       <div class="panel panel-default">
         <div class="panel-body">
-          @if(session()->has('message'))
+          @if (session('status'))
             <div class="alert alert-success">
-              <b>{{ session()->get('message') }}</b>
+              {{ session('status.created') }}
+            </div>
+          @endif
+          
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
             </div>
           @endif
 
-          <form action="" name="createFlight" method="POST">
+          @if (session('input'))
+            <div class="alert alert-success">
+              {{ var_dump(session('input')) }}
+            </div>
+          @endif
+          <form action="{{ route('storeFlight') }}" name="createFlight" method="POST">
             {{ csrf_field() }}
-            <div class="row">
+            <div class="row form-create-flight">
               <div class="col-md-3">
                 <div class="form-group form-inline">
                   <label class="control-label">Flight Class:</label>
@@ -22,7 +37,7 @@
                     <div class="col-md-3">
                       <select class="form-control" name="flightClass">
                         @foreach ($flightClasses as $flightClass)
-                          <option value="{{ $flightClass->id }}">{{ $flightClass->flight_class_name}}</option>
+                          <option value="{{ $flightClass->id }}" {{ old('flightClass') == $flightClass->id ? 'selected' : '' }} >{{ $flightClass->flight_class_name}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -38,9 +53,9 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('flight_code') ? ' has-error' : '' }}">
                   <label class="control-label">Flight Code:</label>
-                  <input type="text" name="flight_code" class="form-control" value="">
+                  <input type="text" name="flight_code" class="form-control" value="{{ old('flight_code') }}">
                 </div>
                 <div class="form-group form-inline">
                   <label class="control-label">Airplane:</label>
@@ -48,7 +63,7 @@
                     <div class="col-md-3">
                       <select class="form-control" name="airplane">
                         @foreach ($airplanes as $airplane)
-                          <option value="{{ $airplane->id }}">{{ $airplane->airplane_name}}</option>
+                          <option value="{{ $airplane->id }}" {{ old('airplane') == $airplane->id ? 'selected' : '' }} >{{ $airplane->airplane_name}}</option>
                         @endforeach
                       </select>
                     </div>
@@ -56,39 +71,43 @@
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group form-inline">
+                <div class="form-group{{ $errors->has('flight_airport_from') ? ' has-error' : '' }}">
                   <label class="control-label">Departure Airport:</label>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <select class="form-control" name="flight_airport_from">
-                        @foreach ($airports as $airport)
-                          <option value="{{ $airport->id }}">{{ $airport->city_name }} ({{ $airport->airport_code }})</option>
-                        @endforeach
-                      </select>
-                    </div>
-                  </div>
+                  <select class="form-control" name="flight_airport_from">
+                    @foreach ($airports as $airport)
+                      <option value="{{ $airport->id }}" {{ old('flight_airport_from') == $airport->id ? 'selected' : '' }} >{{ $airport->city_name }} ({{ $airport->airport_code }})</option>
+                    @endforeach
+                  </select>
                 </div>
-                <div class="form-group form-inline">
+                <div class="form-group{{ $errors->has('flight_airport_from') ? ' has-error' : '' }}">
                   <label class="control-label">Arrival Airport:</label>
-                  <div class="row">
-                    <div class="col-md-3">
-                      <select class="form-control" name="flight_airport_to">
-                        @foreach ($airports as $airport)
-                          <option value="{{ $airport->id }}">{{ $airport->city_name }} ({{ $airport->airport_code }})</option>
-                        @endforeach
-                      </select>
-                    </div>
-                  </div>
+                  <select class="form-control" name="flight_airport_to">
+                    @foreach ($airports as $airport)
+                      <option value="{{ $airport->id }}" {{ old('flight_airport_to') == $airport->id ? 'selected' : '' }} >{{ $airport->city_name }} ({{ $airport->airport_code }})</option>
+                    @endforeach
+                  </select>
+                </div>
+                <div class="form-group{{ $errors->has('distance') ? ' has-error' : '' }}">
+                  <label class="control-label">Distance (km):</label>
+                  <input type="number" class="form-control" name="distance" value="{{ old('distance') }}">
                 </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('departure-date') ? ' has-error' : '' }}">
                   <label class="control-label">Departure Date: </label>
-                  <input type="date" name="departure-date" class="form-control col-xs-2" value="{{ date("Y-m-d") }}" placeholder="Choose Departure Date">
+                  <input type="date" name="departure-date" class="form-control col-xs-2" value="{{ old('departure-date') == '' ? date("Y-m-d") : old('departure-date') }}">
                 </div>
-                <div class="form-group">
+                <div class="form-group{{ $errors->has('return-date') ? ' has-error' : '' }}">
                   <label class="control-label">Return Date: </label>
-                  <input type="date" name="return-date" class="form-control col-xs-2" value="{{ date("Y-m-d") }}" placeholder="Choose Return Date">
+                  <input type="date" name="return-date" class="form-control col-xs-2" value="{{ old('return-date') == '' ? date("Y-m-d") : old('return-date') }}">
+                </div>
+                <div class="form-group{{ $errors->has('departure-datetime') ? ' has-error' : '' }}">
+                  <label class="control-label">Departure DateTime: </label>
+                  <input type="datetime-local" name="departure-datetime" class="form-control col-xs-2" value="{{ old('departure-datetime') == '' ? date("Y-m-d") : old('departure-datetime') }}">
+                </div>
+                <div class="form-group{{ $errors->has('arrival-datetime') ? ' has-error' : '' }}">
+                  <label class="control-label">Arrival DateTime: </label>
+                  <input type="datetime-local" name="arrival-datetime" class="form-control col-xs-2" value="{{ old('arrival-datetime') == '' ? date("Y-m-d") : old('arrival-datetime') }}">
                 </div>
               </div>
             </div>

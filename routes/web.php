@@ -36,6 +36,11 @@ Route::get('/admin/flight/create', [
   'as' => 'createFlight'
 ])->middleware('admin');
 
+Route::post('/admin/flight/store', [
+  'uses' => 'FlightController@store',
+  'as' => 'storeFlight'
+])->middleware('admin');
+
 /*
   Admin routes
 */
